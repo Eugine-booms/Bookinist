@@ -6,8 +6,21 @@
         xmlns:local="clr-namespace:Bookinist"
         mc:Ignorable="d"
         DataContext="{Binding Path=GetMainViewModel, Source={StaticResource Locator}}"
+        d:DataContext="{Binding Path=GetMainViewModel, Source={StaticResource Locator}}"
         Title="{Binding Path=Title}" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+    <DockPanel>
+        <Menu IsMainMenu="True" DockPanel.Dock="Top">
+            <MenuItem Header="Покупатели" Command="{Binding Path=ShowBuyrsViewCommand}"></MenuItem >
+            <MenuItem Header="Книги" Command="{Binding Path=ShowBooksViewCommand}"></MenuItem>
+            <MenuItem Header="Статистика" Command="{Binding Path=ShowStatisticViewCommand}"></MenuItem>
+        </Menu>
+        <StatusBar>
+            <StatusBarItem>Готов</StatusBarItem>
+        </StatusBar>
+        <Grid>
+            <ContentControl Content="{Binding Path=CurentModel}">
+                
+            </ContentControl>
+        </Grid>
+    </DockPanel>
 </Window>
