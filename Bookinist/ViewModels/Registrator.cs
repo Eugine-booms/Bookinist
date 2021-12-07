@@ -11,5 +11,6 @@ namespace Bookinist.ViewModels
     {
         internal static IServiceCollection RegisterViewModels(this IServiceCollection services) =>
             services.AddSingleton<MainViewModel>();
+        
     }
 }

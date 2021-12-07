@@ -1,4 +1,5 @@
-﻿using Bookinist.Data;
+﻿using Bookinist.DAL;
+using Bookinist.Data;
 using Bookinist.Services;
 using Bookinist.ViewModels;
 
@@ -27,16 +28,16 @@ namespace Bookinist
             services
             .RegisterServices()
             .RegisterViewModels()
-            .RegisterDataBase(host.Configuration.GetSection("Database"));
+            .RegisterDataBase(host.Configuration.GetSection("Database"))
+            .RegisterRepositoryesInDB();
         public static IServiceProvider Services => Host.Services;
         protected async override void OnStartup(StartupEventArgs e)
         {
             var host = Host;
             using (var scope = Services.CreateScope())
             {
-               await scope.ServiceProvider.GetRequiredService<DBInitializer>().InitializeAsync().ConfigureAwait(false);   //
+                 scope.ServiceProvider.GetRequiredService<DBInitializer>();  //
             }
-
             await host.StartAsync().ConfigureAwait(false);
             base.OnStartup(e);
         }
