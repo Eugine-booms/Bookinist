@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Bookinist.Interfaces
+﻿namespace Bookinist.Interfaces
 {
     public interface IEntity
     {
