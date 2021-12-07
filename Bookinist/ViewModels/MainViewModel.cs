@@ -12,7 +12,7 @@ namespace Bookinist.ViewModels
 
         #region  string Title Заголовок
         ///<summary> Заголовок
-        private string _Title ="Заголовок окна";
+        private string _Title ="Главное окно";
         ///<summary> Заголовок
         public string Title
         {

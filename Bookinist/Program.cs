@@ -30,7 +30,7 @@ namespace Bookinist
             .ConfigureHostConfiguration(configHost =>
             {
                 configHost.SetBasePath(Directory.GetCurrentDirectory());
-                configHost.AddJsonFile("hostsettings.json", optional: true);
+                //configHost.AddJsonFile("hostsettings.json", optional: true);
                 configHost.AddEnvironmentVariables(prefix: "PREFIX_");
                 configHost.AddCommandLine(args);
 

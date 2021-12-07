@@ -1,4 +1,5 @@
-﻿using Bookinist.Services;
+﻿using Bookinist.Data;
+using Bookinist.Services;
 using Bookinist.ViewModels;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -23,11 +24,19 @@ namespace Bookinist
         public static IHost Host => __Host
             ??= Program.CreateHostBuilder(Environment.GetCommandLineArgs()).Build();
         internal static void ConfigureServices(HostBuilderContext host, IServiceCollection services) =>
-            services.RegisterServices().RegisterViewModels();
+            services
+            .RegisterServices()
+            .RegisterViewModels()
+            .RegisterDataBase(host.Configuration.GetSection("Database"));
         public static IServiceProvider Services => Host.Services;
         protected async override void OnStartup(StartupEventArgs e)
         {
             var host = Host;
+            using (var scope = Services.CreateScope())
+            {
+               await scope.ServiceProvider.GetRequiredService<DBInitializer>().InitializeAsync().ConfigureAwait(false);   //
+            }
+
             await host.StartAsync().ConfigureAwait(false);
             base.OnStartup(e);
         }
