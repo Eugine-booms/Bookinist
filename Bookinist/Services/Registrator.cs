@@ -12,6 +12,7 @@ namespace Bookinist.Services
    internal static class Registrator
 
     {
-        internal static IServiceCollection RegisterServices(this IServiceCollection services) => services.AddTransient<IUserDialog, UserDialog>();
+        internal static IServiceCollection RegisterServices(this IServiceCollection services) => services
+            .AddTransient<IUserDialog, UserDialog>();
     }
 }
