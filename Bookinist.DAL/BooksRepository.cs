@@ -10,5 +10,6 @@ namespace Bookinist.DAL
     class BooksRepository : DbRepository<Book>
     {
         public BooksRepository(BookinistDb db) : base(db) { }
-        public override IQueryable<Book> Items => base.Items.Include(item=>item.Category);
+        public override IQueryable<Book> Items => base.Items.Include(item => item.Category);
     }
+}

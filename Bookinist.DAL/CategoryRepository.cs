@@ -15,3 +15,4 @@ namespace Bookinist.DAL
 
         public override IQueryable<Category> Items => base.Items.Include(item => item.Books);
     }
+}

@@ -13,9 +13,10 @@ namespace Bookinist.DAL
         {
         }
 
-        public override IQueryable<Deal> Items => 
+        public override IQueryable<Deal> Items =>
             base.Items
             .Include(item => item.Book)
             .Include(item => item.Seller)
             .Include(item => item.Buyer);
+    }
 }
