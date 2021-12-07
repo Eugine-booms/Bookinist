@@ -21,6 +21,7 @@ namespace Bookinist.ViewModels
         private readonly ISaleService _saleService;
         private readonly IRepository<Seller> _sellerRepository;
         private readonly IRepository<Buyer> _bauerRepository;
+        private readonly IRepository<Deal> _deal;
 
 
 
@@ -43,7 +44,9 @@ namespace Bookinist.ViewModels
             IRepository<Book> bookRepository,
             ISaleService saleService,
             IRepository<Seller> sellerRepository,
-            IRepository<Buyer> bauerRepository
+            IRepository<Buyer> bauerRepository,
+            IRepository<Deal> deal
+
 
             )
         {
@@ -51,8 +54,9 @@ namespace Bookinist.ViewModels
             _saleService = saleService;
             _sellerRepository = sellerRepository;
             _bauerRepository = bauerRepository;
+            this._deal = deal;
 
-           // Test();
+            // Test();
         }
 
         private async void Test()
@@ -119,7 +123,8 @@ namespace Bookinist.ViewModels
             CurentModel = new StatisticViewModel(
                 _bookRepository,
                 _bauerRepository,
-                _sellerRepository
+                _sellerRepository,
+                _deal
                 );
         }
         private bool CanShowStatisticViewCommandExecute(object p) => true;
