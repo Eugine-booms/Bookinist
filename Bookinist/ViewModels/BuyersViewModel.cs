@@ -11,11 +11,11 @@ namespace Bookinist.ViewModels
 {
     class BuyersViewModel : ViewModel
     {
-        private readonly IRepository<Book> _booksRepository;
+        private IRepository<Buyer> _bauerRepository;
 
-        public BuyersViewModel( IRepository<Book> booksRepository)
+        public BuyersViewModel(IRepository<Buyer> bauerRepository)
         {
-            _booksRepository = booksRepository;
+            _bauerRepository = bauerRepository;
         }
     }
 }

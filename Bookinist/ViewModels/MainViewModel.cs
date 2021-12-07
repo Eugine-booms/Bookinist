@@ -52,7 +52,7 @@ namespace Bookinist.ViewModels
             _sellerRepository = sellerRepository;
             _bauerRepository = bauerRepository;
 
-            Test();
+           // Test();
         }
 
         private async void Test()
