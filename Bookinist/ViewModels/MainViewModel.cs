@@ -2,13 +2,16 @@
 using Bookinist.Interfaces;
 using Bookinist.Services.Interfaces;
 
-using MathCore.ViewModels;
+
+using MathCore.WPF.Commands;
+using MathCore.WPF.ViewModels;
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Windows.Input;
 
 namespace Bookinist.ViewModels
 {
@@ -20,6 +23,17 @@ namespace Bookinist.ViewModels
         private readonly IRepository<Buyer> _bauerRepository;
 
 
+
+        #region  ViewModel CurentModel Текущее дочерняя модель представление 
+        ///<summary> Текущее дочерняя модель представление 
+        private ViewModel _CurentModel;
+        ///<summary> Текущее дочерняя модель представление 
+        public ViewModel CurentModel
+        {
+            get => _CurentModel;
+            set => Set(ref _CurentModel, value, nameof(CurentModel));
+        }
+        #endregion
 
 
 
@@ -62,6 +76,56 @@ namespace Bookinist.ViewModels
             set => Set(ref _Title, value, nameof(Title));
         }
         #endregion
+
+
+        #region Команды 
+        #region Команда ShowBooksView
+        private ICommand _ShowBooksViewCommand;
+        /// <summary>"Описание"</summary>
+        public ICommand ShowBooksViewCommand =>
+        _ShowBooksViewCommand ??=
+        new LambdaCommand(OnShowBooksViewCommandExecuted, CanShowBooksViewCommandExecute);
+        private void OnShowBooksViewCommandExecuted(object p)
+        {
+            CurentModel = new BooksViewModel(_bookRepository);
+        }
+        private bool CanShowBooksViewCommandExecute(object p) => true;
+
+        #endregion
+
+        #region Команда ShowBuyrsView
+        private ICommand _ShowBuyrsViewCommand;
+        /// <summary>"Описание"</summary>
+        public ICommand ShowBuyrsViewCommand =>
+        _ShowBuyrsViewCommand ??=
+        new LambdaCommand(OnShowBuyrsViewCommandExecuted, CanShowBuyrsViewCommandExecute);
+        private void OnShowBuyrsViewCommandExecuted(object p)
+        {
+            CurentModel = new  BuyersViewModel(_bauerRepository);
+        }
+        private bool CanShowBuyrsViewCommandExecute(object p) => true;
+        
+        #endregion
+
+
+        #region Команда ShowStatisticView
+        private ICommand _ShowStatisticViewCommand;
+        /// <summary>"Описание"</summary>
+        public ICommand ShowStatisticViewCommand =>
+        _ShowStatisticViewCommand ??=
+        new LambdaCommand(OnShowStatisticViewCommandExecuted, CanShowStatisticViewCommandExecute);
+        private void OnShowStatisticViewCommandExecuted(object p)
+        {
+            CurentModel = new StatisticViewModel(
+                _bookRepository,
+                _bauerRepository,
+                _sellerRepository
+                );
+        }
+        private bool CanShowStatisticViewCommandExecute(object p) => true;
+        #endregion 
+        #endregion
+
 
     }
 }
