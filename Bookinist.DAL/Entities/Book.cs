@@ -8,5 +8,7 @@ namespace Bookinist.DAL.Entities
     public class Book : NamedEntity
     {
         public virtual Category Category { get; set; }
+
+        public override string ToString() => $"Книга {Name}";
     }
 }

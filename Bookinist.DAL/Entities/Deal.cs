@@ -13,5 +13,6 @@ namespace Bookinist.DAL.Entities
         [Column(TypeName="decimal(18,2)")]
         public virtual decimal Price { get; set; }
 
+        public override string ToString() => $"Сделка id: { Id } продавец: {Seller} покупатель: { Buyer} книга: {Book} цена {Price}";
     }
 }
