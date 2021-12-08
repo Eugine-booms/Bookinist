@@ -4,14 +4,20 @@ using Bookinist.Interfaces;
 using MathCore.WPF.ViewModels;
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Bookinist.ViewModels
 {
     class BuyersViewModel : ViewModel
     {
         private IRepository<Buyer> _bauerRepository;
+
+        public BuyersViewModel()
+        {
+           
+                if (!App.IsDesignTime)
+                    throw new InvalidOperationException("Использование конструктора предназначенного для дизайнера VS");
+            
+        }
 
         public BuyersViewModel(IRepository<Buyer> bauerRepository)
         {

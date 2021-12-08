@@ -7,10 +7,10 @@ using MathCore.WPF.ViewModels;
 
 using Microsoft.EntityFrameworkCore;
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -54,6 +54,9 @@ namespace Bookinist.ViewModels
 
         public StatisticViewModel()
         {
+
+            if (!App.IsDesignTime)
+                throw new InvalidOperationException("Использование конструктора предназначенного для дизайнера VS");
         }
         #endregion
 
