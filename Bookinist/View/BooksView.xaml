@@ -3,16 +3,37 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Bookinist.View" 
+             xmlns:local="clr-namespace:Bookinist.View"
              xmlns:viewmodels="clr-namespace:Bookinist.ViewModels"
-             d:DataContext="{d:DesignInstance {x:Type viewmodels:BooksViewModel}}"
+             xmlns:cm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             d:DataContext="{d:DesignInstance {x:Type viewmodels:BooksViewModel}, IsDesignTimeCreatable=True}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBlock Text="Книги" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="90">
+        <!--<TextBlock Text="{Binding TestValue}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="90">
             <TextBlock.Effect>
                 <DropShadowEffect BlurRadius="10" ShadowDepth="3"/>
             </TextBlock.Effect>
-        </TextBlock>
+        </TextBlock>-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <GroupBox Header="Книги">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Top">
+                    <TextBox Text="{Binding BookFilter, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+                <ListBox MinWidth=" 140" ItemsSource="{Binding BookView}" >
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" ToolTip="{Binding Category.Name}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+
+                </ListBox>
+            </DockPanel>
+           
+        </GroupBox>
     </Grid>
 </UserControl>
