@@ -23,6 +23,17 @@ namespace Bookinist
     {
         public static bool IsDesignTime { get; private set; } = true;
         private static IHost __Host;
+
+        #region Статусы окна
+        public static Window ActiveWindow => Application.Current.Windows
+           .OfType<Window>()
+           .FirstOrDefault(w => w.IsActive);
+
+        public static Window FocusedWindow => App.Current.Windows
+            .OfType<Window>()
+            .FirstOrDefault(w => w.IsFocused);
+        public static Window CurrentWindow => FocusedWindow ?? ActiveWindow; 
+        #endregion
         public static IHost Host => __Host
             ??= Program.CreateHostBuilder(Environment.GetCommandLineArgs()).Build();
         internal static void ConfigureServices(HostBuilderContext host, IServiceCollection services) =>
