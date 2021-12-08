@@ -7,6 +7,7 @@ using MathCore.WPF.ViewModels;
 
 using Microsoft.EntityFrameworkCore;
 
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -73,21 +74,15 @@ namespace Bookinist.ViewModels
         {
             var q = _deal.Items
                 .GroupBy(d => d.Book.Id)
-                .Select(deals => new { bookId = deals.Key, count = deals.Count() })
+                .Select(deals => new { bookId = deals.Key, count = deals.Count(), sum=deals.Sum(d=>d.Price)})
                 .OrderByDescending(deals => deals.count)
                 .Take(15)
                 .Join(_bookRepository.Items,
                 deals => deals.bookId,
                 book => book.Id,
-                (deals, book) => new BestSellersInfo() { Book = book, SellCount = deals.count });
+                (deals, book) => new BestSellersInfo() { Book = book, SellCount = deals.count,SumCount=deals.sum });
 
-            BestSellers.Clear();
-            foreach (var item in await q.ToArrayAsync())
-            {
-                BestSellers.Add(item);
-            }
-           
-
+            BestSellers.AddClear(await q.ToArrayAsync());
         }
         #endregion
     }
