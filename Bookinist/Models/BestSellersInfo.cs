@@ -10,5 +10,6 @@ namespace Bookinist.Models
     {
         public Book Book { get; set; }
         public int SellCount {get; set; }
+        public decimal SumCount { get; set; }
     }
 }
