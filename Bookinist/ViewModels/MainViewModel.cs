@@ -22,6 +22,7 @@ namespace Bookinist.ViewModels
         private readonly IRepository<Seller> _sellerRepository;
         private readonly IRepository<Buyer> _bauerRepository;
         private readonly IRepository<Deal> _deal;
+        private readonly IUserDialog userDialog;
 
 
 
@@ -45,8 +46,8 @@ namespace Bookinist.ViewModels
             ISaleService saleService,
             IRepository<Seller> sellerRepository,
             IRepository<Buyer> bauerRepository,
-            IRepository<Deal> deal
-
+            IRepository<Deal> deal,
+            IUserDialog userDialog
 
             )
         {
@@ -55,6 +56,7 @@ namespace Bookinist.ViewModels
             _sellerRepository = sellerRepository;
             _bauerRepository = bauerRepository;
             this._deal = deal;
+            this.userDialog = userDialog;
 
             // Test();
         }
@@ -91,7 +93,7 @@ namespace Bookinist.ViewModels
         new LambdaCommand(OnShowBooksViewCommandExecuted, CanShowBooksViewCommandExecute);
         private void OnShowBooksViewCommandExecuted(object p)
         {
-            CurentModel = new BooksViewModel(_bookRepository);
+            CurentModel = new BooksViewModel(_bookRepository, userDialog);
         }
         private bool CanShowBooksViewCommandExecute(object p) => true;
 

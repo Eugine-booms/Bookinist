@@ -58,7 +58,8 @@ namespace Bookinist.DAL
             //var item = Get(id);
             //if (item is null) throw new KeyNotFoundException("Id не найден в базе данных");
             //_db.Entry(item).State=EntityState.Deleted;
-            var items = _db.Remove(new T { Id = id });
+            var item = _set.Local.FirstOrDefault(i => i.Id == id);
+            var items = _db.Remove(item);
             if (AutosaveChanges)
                 _db.SaveChanges();
             return items.Entity;
