@@ -2,10 +2,8 @@
 using Bookinist.Data;
 using Bookinist.Services;
 using Bookinist.ViewModels;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -21,6 +19,7 @@ namespace Bookinist
     /// </summary>
     public partial class App : Application
     {
+
         public static bool IsDesignTime { get; private set; } = true;
         private static IHost __Host;
 
@@ -61,5 +60,6 @@ namespace Bookinist
             await host.StopAsync().ConfigureAwait(false);
             host = null;
         }
+
     }
 }
