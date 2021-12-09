@@ -24,7 +24,9 @@ namespace Bookinist.Infrastructure.Commands
 
             var dialog_Result = DialogResult;
             if (parameter != null)
-                dialog_Result = (bool?)Convert.ChangeType(parameter, typeof(bool?));
+                dialog_Result = (bool?)Convert.ChangeType(parameter, typeof(bool));
+              
+            
 
             window.DialogResult = dialog_Result;
             window.Close();
