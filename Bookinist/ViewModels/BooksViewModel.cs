@@ -1,6 +1,7 @@
 ﻿using Bookinist.DAL.Entities;
 using Bookinist.Infrastructure.DebugServices;
 using Bookinist.Interfaces;
+using Bookinist.Services;
 using Bookinist.Services.Interfaces;
 using Bookinist.View;
 
@@ -14,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -25,8 +27,8 @@ namespace Bookinist.ViewModels
     {
         private IRepository<Book> _bookRepository;
         private readonly IUserDialog userDialog;
-        private readonly CollectionViewSource bookViewSource=new CollectionViewSource();
-        public ICollectionView BookView=> bookViewSource?.View; 
+        private readonly CollectionViewSource bookViewSource = new CollectionViewSource();
+        public ICollectionView BookView => bookViewSource?.View;
 
         #region  ObservableCollection Books Коллекция книг
         ///<summary> Коллекция книг
@@ -40,25 +42,26 @@ namespace Bookinist.ViewModels
                 if (Set(ref _Books, value, nameof(Books)))
                 {
                     bookViewSource.Source = Books;
-                    OnPropertyChanged(nameof(BookView));  
+                    OnPropertyChanged(nameof(BookView));
                 }
             }
         }
         #endregion
 
         #region Конструктор
-        //public BooksViewModel() : this(new DebugBookRepository())
-        //{
-        //    if (!App.IsDesignTime)
-        //        throw new InvalidOperationException("Использование конструктора предназначенного для дизайнера VS");
-        //    _ = OnLoadDataCommandExecuted();
-        //}
+        public BooksViewModel() : this(new DebugBookRepository(), new UserDialog())
+        {
+            if (!App.IsDesignTime)
+                throw new InvalidOperationException("Использование конструктора предназначенного для дизайнера VS");
+            _ = OnLoadDataCommandExecuted();
+        }
         public BooksViewModel(IRepository<Book> bookRepository, IUserDialog userDialog)
         {
             _bookRepository = bookRepository;
             this.userDialog = userDialog;
             bookViewSource.Filter += BookViewSource_Filter;
         }
+
         #endregion
 
         #region ФильтерКниг
@@ -106,13 +109,22 @@ namespace Bookinist.ViewModels
         new LambdaCommand(OnAddBookCommandExecuted, CanAddBookCommandExecute);
         private void OnAddBookCommandExecuted(object p)
         {
-            
-            if(!(p is Book new_book))
-                new_book = new Book();
-            if (!userDialog.Edit(new_book)) return;
-            _Books.Add(_bookRepository.Add(new_book));
-            _bookRepository.Add(new_book);
 
+            if (!(p is Book new_book))
+            {
+                new_book = new Book();
+                if (!userDialog.Edit(new_book)) return;
+                Books.Add(_bookRepository.Add(new_book));
+            }
+            else
+            {
+                if (!userDialog.Edit(new_book)) return;
+                _bookRepository.Update(new_book);
+
+
+            }
+            SelectedBook = new_book;
+            BookView.Refresh();
         }
         private bool CanAddBookCommandExecute(object p) => true;
 
@@ -127,12 +139,15 @@ namespace Bookinist.ViewModels
         new LambdaCommand(OnRemoveBookCommandExecuted, CanRemoveBookCommandExecute);
         private void OnRemoveBookCommandExecuted(object p)
         {
-            var book = SelectedBook;
-             _bookRepository.Remove(book.Id);
+            var book = p as Book ?? SelectedBook;
+            if (userDialog.Warninng($"Вы действительно хотите удалить книгу {book.Name}?", "Удаление книги"))
+                _Books.Remove(_bookRepository.Remove(book.Id));
+            SelectedBook = null;
+
 
         }
         private bool CanRemoveBookCommandExecute(object p) => SelectedBook is Book book;
-        
+
         #endregion
 
 

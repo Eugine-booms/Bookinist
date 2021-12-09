@@ -4,14 +4,10 @@ using Bookinist.Interfaces;
 using MathCore.WPF.ViewModels;
 
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualBasic;
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using static MathCore.Values.CSV;
 
 namespace Bookinist.ViewModels
 {
@@ -23,8 +19,9 @@ namespace Bookinist.ViewModels
         {
             _book = book?? new Book() {Category=new Category() { } };
 
-            CategoryList = App.Services.GetRequiredService<IRepository<Category>>().Items.ToList(); 
-               
+            CategoryList = App.Services.GetRequiredService<IRepository<Category>>().Items.ToList();
+            Name = book.Name;
+            Category = _book.Category;   
         }
 
         public BookEditorWindowViewModel()

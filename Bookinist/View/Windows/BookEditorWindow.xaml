@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Bookinist.View.Windows" 
         xmlns:viewmodels="clr-namespace:Bookinist.ViewModels"
         mc:Ignorable="d"
-        Title="BookEditorWindow" Height="134" Width="424"
+        Title="BookEditorWindow" Height="200" Width="424"
         d:DataContext="{d:DesignInstance Type={x:Type viewmodels:BookEditorWindowViewModel}}">
     <DockPanel >
 
@@ -39,7 +39,7 @@
             <TextBlock Text="Название" Grid.Column="0" Grid.Row="0"/>
             <TextBlock Text="Коллекция" Grid.Column="0" Grid.Row="1"/>
             <TextBox  Text="{Binding Path=Name}" Grid.Column="1"  Grid.Row="0" />
-            <ComboBox Text="Коллекция" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding CategoryList}" SelectedItem="{Binding Collection}"/>
+            <ComboBox Text="Коллекция" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding CategoryList}" SelectedItem="{Binding Category, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
         </Grid>
 
     </DockPanel>
